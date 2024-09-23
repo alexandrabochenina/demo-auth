@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { PrivateRoute} from '../src/components/PrivateRoute'
+import {Main} from '../src/pages/Main'
+import {LogIn} from '../src/pages/Login'
+import {LogOut} from '../src/pages/Logout'
 
-function App() {
+
+import { MyProfile } from './pages/MyProfile';
+import PublicRoute from './components/PublicRoute';
+
+
+export const App: React.FC = () => {
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Main />}></Route>
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<LogIn />}></Route>
+        </Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<MyProfile />}></Route>
+          <Route path="/logout" element={<LogOut />}></Route>
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
